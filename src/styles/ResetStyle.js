@@ -131,4 +131,4 @@ table {
   border-spacing: 0;
 }
 `
-export default ResetStyle
+export default ResetStyle;
