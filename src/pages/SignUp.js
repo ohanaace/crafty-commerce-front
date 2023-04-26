@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiUrl } from "../App"
 import logo from "../assets/transparentlogo.png"
 
@@ -27,7 +27,7 @@ export default function SignUp() {
         axios
         .post(`${apiUrl}/signup`,objetoSignUp)
             .then(() => {
-                toast('Login bem sucedido!');
+                toast('Registro bem sucedido!');
                 navigate('/');
             })
         .catch((err) => {
@@ -73,7 +73,10 @@ export default function SignUp() {
                 />
                 <button type={"submit"}>
                     Registrar
-                </button>
+                    </button>
+                    <Link to={"/"}>
+                    Já tem uma conta? Clique aqui!
+                </Link>
         </FormContainer>
 
             </Body>
