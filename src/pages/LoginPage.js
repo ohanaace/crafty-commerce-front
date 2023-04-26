@@ -4,14 +4,28 @@ import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import logo from "../assets/transparentlogo.png"
 import { useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { apiUrl } from "../App";
 
 export default function LogInPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();
+
     function submitLogin(e) {
         e.preventDefault()
         const body = { email, password }
+        axios.post(`${apiUrl}/`,body)
+        .then((res) => {
+            toast('Login bem sucedido!');
+            navigate('/home');
+            localStorage.setItem("token", res.data.token);
+        })
+    .catch((err) => {
+      console.log(err);
+      toast.error(err);
+    });
     }
     return (
         <PageContainer>
@@ -19,6 +33,7 @@ export default function LogInPage() {
                 <img src={logo} alt="logo" />
                 Crafty
             </LogoContainer>
+            <ToastContainer />
             <FormContainer onSubmit={submitLogin} >
                 <input
                     type={"email"}
@@ -103,3 +118,4 @@ const FormContainer = styled.form`
         color: #52B6FF;
     }
 `
+export { FormContainer};
