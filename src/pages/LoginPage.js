@@ -34,7 +34,8 @@ export default function LogInPage(){
 }
 
 const PageContainer = styled.main`
-    background-color: #5A9B35;
+    background: rgb(157,233,148);
+    background: radial-gradient(circle, rgba(157,233,148,1) 0%, rgba(174,214,238,1) 100%);
     width: 100%;
     height: 100vh;
     display: flex;
@@ -74,11 +75,11 @@ const FormContainer = styled.form`
         font-weight: 400;
     }
     input{
-        padding: 2px;
+        padding: 10px;
         border: solid 1px #000;
     }
     button{
-        background-color: #407AB1;
+        background-color: #52B6FF;
         color: #FFF;
         border: none;
         font-family: 'Roboto', sans-serif;
@@ -88,6 +89,6 @@ const FormContainer = styled.form`
         text-decoration: none;
         font-size: 16px;
         font-family: 'Roboto', sans-serif;
-        color: #407AB1;
+        color: #52B6FF;
     }
 `
