@@ -3,30 +3,41 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import logo from "../assets/transparentlogo.png"
+import { useState } from "react";
 
 
-export default function LogInPage(){
+export default function LogInPage() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    function submitLogin(e) {
+        e.preventDefault()
+        const body = { email, password }
+    }
     return (
         <PageContainer>
             <LogoContainer>
                 <img src={logo} alt="logo" />
                 Crafty
             </LogoContainer>
-            <FormContainer>
+            <FormContainer onSubmit={submitLogin} >
                 <input
-                type={"email"} 
-                placeholder="email"
-                required/>
-                <input 
-                type={"password"}
-                placeholder="senha"
-                required
+                    type={"email"}
+                    placeholder="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required />
+                <input
+                    type={"password"}
+                    placeholder="senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
                 />
                 <button type={"submit"}>
                     Entrar
                 </button>
-                <Link>
-                Não tem uma conta? Cadastre-se aqui!
+                <Link to={"/signup"}>
+                    Não tem uma conta? Cadastre-se aqui!
                 </Link>
             </FormContainer>
         </PageContainer>
