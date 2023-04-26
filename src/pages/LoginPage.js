@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import logo from "../assets/logo.jpg"
+import logo from "../assets/transparentlogo.png"
 
 
 export default function LogInPage(){
@@ -34,13 +34,13 @@ export default function LogInPage(){
 }
 
 const PageContainer = styled.main`
+    background-color: #5A9B35;
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
 `
 const LogoContainer = styled.div`
 width: 40%;
@@ -78,7 +78,7 @@ const FormContainer = styled.form`
         border: solid 1px #000;
     }
     button{
-        background-color: #03f4fc;
+        background-color: #407AB1;
         color: #FFF;
         border: none;
         font-family: 'Roboto', sans-serif;
@@ -88,6 +88,6 @@ const FormContainer = styled.form`
         text-decoration: none;
         font-size: 16px;
         font-family: 'Roboto', sans-serif;
-        color: #2e2e2d;
+        color: #407AB1;
     }
 `
