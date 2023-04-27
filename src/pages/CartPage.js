@@ -106,11 +106,11 @@ display:flex;
 `
 const PlusIcon = styled(BsFillPatchPlusFill)`
 width: 20px;
-heigth:20px;
+height:20px;
 color: black;
 `
 const MinusIcon = styled(BsFillPatchMinusFill)`
 width: 20px;
-heigth:20px;
+height:20px;
 color: black;
 `
