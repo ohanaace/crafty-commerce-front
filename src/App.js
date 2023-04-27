@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LogInPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/carrinho" element={<CartPage />} />
       </Routes>
     </BrowserRouter>
   );

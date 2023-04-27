@@ -1,116 +1,222 @@
 import styled from "styled-components";
-import {BsFillPatchPlusFill, BsFillPatchMinusFill} from "react-icons/bs";
+import { BsFillPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
+import {FaTrash} from "react-icons/fa";
 
+export default function CartPage() {
+  return (
+    <Container>
+      <CartTitle>Meu Carrinho</CartTitle>
 
-export default function CartPage (){
-    return (
-        <Container>
-            <Cart>Meu Carrinho</Cart>
+      <ProductsContainer>
+
+        <Products>
+
             <CartContainer>
-                <Details>
-                    <Tittle>Produto</Tittle>
-                    <Name>Hidratante corporal c/ manteiga de karité</Name>
-                </Details>
-                <Details>
-                    <Tittle>Preço</Tittle>
-                    <Name>R$34,90</Name>
-                </Details>
-                <Details>
-                    <Tittle>Quantidade</Tittle>
-                    <Quantity>
-                        <PlusIcon />
-                        <Counter>0</Counter>
-                        <MinusIcon />
-                    </Quantity>
+                <CartItem>
+                <ItemImage src="https://via.placeholder.com/150x150" alt="Product image" />
+                <ItemInfo>
+                    <ItemName>Hidratante corporal c/ manteiga de karité</ItemName>
+                    <ItemPrice>R$ 34,90</ItemPrice>
+                    <QuantityControl>
                     
-                </Details>
+                    <PlusIcon />
+                    
+                    <QuantityText>1</QuantityText>
+                    
+                    <MinusIcon />
+                    
+                    </QuantityControl>
+                    <TrashIcon />
+                </ItemInfo>
+                </CartItem>
             </CartContainer>
-        </Container>
-    )
+
+           
+        </Products>
+
+      </ProductsContainer>
+
+      <PurchaseSummary>
+        <h2>Subtotal =</h2>
+        <div>R$ 34,90</div>
+
+        <CheckoutButton>Finalizar compra</CheckoutButton>
+
+      </PurchaseSummary>
+
+    </Container>
+
+  );
 }
 
 const Container = styled.div`
-background: rgb(157,233,148);
-background: radial-gradient(circle, rgba(157,233,148,1) 0%, rgba(174,214,238,1) 100%);
-width: 100%;
-height: 100vh;
+  background: linear-gradient(
+    to bottom right,
+    rgba(157, 233, 148, 1),
+    rgba(174, 214, 238, 1)
+  );
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ProductsContainer = styled.div`
+flex-grow: 1;
+padding: 16px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+overflow-y: scroll;
+::-webkit-scrollbar {
+  display: none;
+}
+`
+const Products = styled.div`
+overflow-y: scroll;
+margin: 10px 0px;
+::-webkit-scrollbar {
+    display: none;
+}
+`
+
+const CartTitle = styled.h1`
+font-family: 'Roboto', sans-serif;
+font-size: 2rem;
+font-weight: 700;
+color: #222;
+margin: 2rem auto;
+`;
+
+const CartContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-position: relative;
+background-color: #fff;
+width: 100%;
+height: 15rem;
+padding: 1.5rem;
+border-radius: 10px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+margin-bottom: 1rem;
+`;
+
+const CartItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  position: relative;
+`;
+
+const ItemImage = styled.img`
+  width: 150px;
+  height: 150px;
+  margin-right: 2rem;
+`;
+
+const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const ItemName = styled.h3`
+font-family: 'Roboto', sans-serif;
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 1rem;
+`;
+
+const ItemPrice = styled.p`
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-family: 'Roboto', sans-serif;
+`;
+
+const QuantityControl = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 8rem;
+  top: 8rem;
+
+`;
+
+const PlusIcon = styled(BsFillPlusCircleFill)`
+  color: #52b6ff;
+  width: 1.8rem;
+  height: 1.8rem;
+`;
+
+const MinusIcon = styled(BsFillDashCircleFill)`
+  color: #52b6ff;
+  width: 1.8rem;
+  height: 1.8rem;
+`;
+
+const TrashIcon = styled(FaTrash)`
+color: #52b6ff;
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  bottom: 0px;
+  right:0px;
+  color: gray;
 `
-const Cart = styled.div`
+const CheckoutButton = styled.button`
+border: none;
+border-radius: 4.63636px;
+width: 10rem;
+height: 3rem;
+background-color:#52b6ff;
+font-family: 'Roboto', sans-serif;
+font-size: 1rem;
+color:#fff;
+font-weight: 600;
 position: absolute;
 top: 20px;
-left:20px;
-font-size: 30px;
-font-family: 'Roboto', sans-serif;
-color: black;
+right: 150px;
 `
-const CartContainer = styled.div`
-box-sizing: border-box;
-width: 600px;
-height:400px;
-position: absolute;
-top: 150px;
-left:200px;
-display:flex;
 
-border: 2px solid black;
-padding: 10px;
-overflow-y: scroll;
-::-webkit-scrollbar{
-    display:none;
-}
-background-color:pink;
+const QuantityText = styled.span`
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  font-family: 'Roboto', sans-serif;
 `
-const Details = styled.div`
-width: 80px;
-height: 50px;
+const PurchaseSummary = styled.div`
+width: 50%;
+height: 15vh;
 display: flex;
 flex-direction: column;
-`
-const Tittle = styled.h2`
-width: 150px;
-margin-bottom: 10px;
-border: 1px solid black;
-font-size: 23px;
-font-family: 'Roboto', sans-serif;
-color: #52B6FF;
-background-color: red;
-`
-const Name = styled.p`
-width: 150px;
-height: 50px;
-border: 2px solid black;
-font-size: 16px;
-font-family: 'Roboto', sans-serif;
-color: #52B6FF;
-`
-const Counter = styled.div`
-width:20px;
-height:20px;
-font-size: 16px;
-font-family: 'Roboto', sans-serif;
-color: #52B6FF;
-display: flex;
-justify-content: center;
 align-items: center;
-border: 0.1px solid black;
-`
-const Quantity = styled.div`
-width:50px;
-height:50px;
-display:flex;
-`
-const PlusIcon = styled(BsFillPatchPlusFill)`
-width: 20px;
-heigth:20px;
-color: black;
-`
-const MinusIcon = styled(BsFillPatchMinusFill)`
-width: 20px;
-heigth:20px;
-color: black;
+justify-content: center;
+margin-bottom: 2rem;
+position: relative;
+h2, div{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+h2{
+    position:absolute;
+    top: 30px;
+    left: 200px;
+}
+div {
+    position:absolute;
+    top: 30px;
+    left: 350px;
+}
 `
