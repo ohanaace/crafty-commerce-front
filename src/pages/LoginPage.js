@@ -1,31 +1,41 @@
 import styled from "styled-components";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import logo from "../assets/transparentlogo.png"
-import { useState, useNavigate } from "react";
+import { useState} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiUrl } from "../App";
+import { useContext } from "react";
+import { UserContext } from "../contexts/loginContext";
 
 export default function LogInPage() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const {setAuthUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     function submitLogin(e) {
-        e.preventDefault()
-        const body = { email, password }
-        axios.post(`${apiUrl}/`,body)
-        .then((res) => {
-            toast('Login bem sucedido!');
-            navigate('/home');
-            localStorage.setItem("token", res.data.token);
-        })
-    .catch((err) => {
-      console.log(err);
-      toast.error(err);
-    });
+        e.preventDefault();
+        setLoading(true)
+        const body = { email, password };
+        console.log(body)
+        axios.post(`${apiUrl}/login`, body)
+            .then((res) => {
+                toast('Login bem sucedido!');
+                localStorage.setItem("user", JSON.stringify(res.data));
+                setAuthUser(res.data);
+                navigate('/home');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.response.data);
+                setLoading(false);
+                setEmail("");
+                setPassword("");
+            });
     }
     return (
         <PageContainer>
@@ -37,19 +47,23 @@ export default function LogInPage() {
             <FormContainer onSubmit={submitLogin} >
                 <input
                     type={"email"}
-                    placeholder="email"
+                    placeholder="Email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    required />
+                    required
+                    disabled={loading}
+                />
                 <input
                     type={"password"}
-                    placeholder="senha"
+                    placeholder="Senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
+                    disabled={loading}
                 />
-                <button type={"submit"}>
-                    Entrar
+                <button type={"submit"}
+                    disabled={loading}>
+                 {loading ? <ThreeDots type="ThreeDots" color={"#FFF"} height={20} width={20} /> :  "Entrar"}
                 </button>
                 <Link to={"/signup"}>
                     Não tem uma conta? Cadastre-se aqui!
@@ -105,6 +119,9 @@ const FormContainer = styled.form`
         border: solid 1px #000;
     }
     button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #52B6FF;
         color: #FFF;
         border: none;
@@ -118,4 +135,4 @@ const FormContainer = styled.form`
         color: #52B6FF;
     }
 `
-export { FormContainer};
+export { FormContainer };
