@@ -1,15 +1,25 @@
 import styled from "styled-components"
 import logo from "../../assets/transparentlogo.png"
 import { FiLogOut } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useContext } from "react";
+import { UserContext } from "../../contexts/loginContext";
 
 export default function Header() {
+    const navigate = useNavigate();
+    const { setAuthUser } = useContext(UserContext);
+
+    function logOut() {
+        localStorage.clear();
+        setAuthUser({});
+        navigate("/");        
+    }
     return (
         <> 
             <Text>         
                     <Logo src={logo} alt="logo" />
                     Crafty
-                <Link><FiLogOut className="myIcon" size={38}/></Link>
+                <Link><FiLogOut className="myIcon" size={38} onClick={()=>logOut() } /></Link>
             </Text>
 
         </>
