@@ -3,30 +3,56 @@ import { Link} from "react-router-dom";
 // import axios from "axios";
 // import { ThreeDots } from "react-loader-spinner";
 import logo from "../assets/transparentlogo.png"
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { apiUrl } from "../App";
 
+export default function LogInPage() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate();
 
-export default function LogInPage(){
+    function submitLogin(e) {
+        e.preventDefault()
+        const body = { email, password }
+        axios.post(`${apiUrl}/`,body)
+        .then((res) => {
+            toast('Login bem sucedido!');
+            navigate('/home');
+            localStorage.setItem("token", res.data.token);
+        })
+    .catch((err) => {
+      console.log(err);
+      toast.error(err);
+    });
+    }
     return (
         <PageContainer>
             <LogoContainer>
                 <img src={logo} alt="logo" />
                 Crafty
             </LogoContainer>
-            <FormContainer>
+            <ToastContainer />
+            <FormContainer onSubmit={submitLogin} >
                 <input
-                type={"email"} 
-                placeholder="email"
-                required/>
-                <input 
-                type={"password"}
-                placeholder="senha"
-                required
+                    type={"email"}
+                    placeholder="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required />
+                <input
+                    type={"password"}
+                    placeholder="senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
                 />
                 <button type={"submit"}>
                     Entrar
                 </button>
-                <Link>
-                Não tem uma conta? Cadastre-se aqui!
+                <Link to={"/signup"}>
+                    Não tem uma conta? Cadastre-se aqui!
                 </Link>
             </FormContainer>
         </PageContainer>
@@ -92,3 +118,4 @@ const FormContainer = styled.form`
         color: #52B6FF;
     }
 `
+export { FormContainer};
