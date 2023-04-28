@@ -1,8 +1,16 @@
 import styled from "styled-components";
 import { BsFillPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
-import {FaTrash, FaShoppingCart} from "react-icons/fa";
+import {FaTrash} from "react-icons/fa";
+import { useState } from "react";
 
 export default function CartPage() {
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  function handlePaymentMethodChange(e){
+    console.log(e.target.value);
+  }
+
   return (
     <Container>
       <CartTitle>Meu Carrinho</CartTitle>
@@ -40,6 +48,15 @@ export default function CartPage() {
         <h2>Subtotal =</h2>
         <div>R$ 34,90</div>
 
+        <StyledSelect value={paymentMethod} onChange={handlePaymentMethodChange}>
+          <StyledOption value="">Selecione a forma de pagamento</StyledOption>
+          <StyledOption value="credito">Cartão de Crédito</StyledOption>
+          <StyledOption value="debito">Cartão de Débito</StyledOption>
+          <StyledOption value="boleto">Boleto Bancário</StyledOption>
+          <StyledOption value="pix">Pix</StyledOption>
+          
+        </StyledSelect>
+      
         <CheckoutButton>Finalizar compra</CheckoutButton>
 
       </PurchaseSummary>
@@ -220,3 +237,22 @@ div {
     left: 350px;
 }
 `
+const StyledSelect = styled.select`
+font-family: 'Roboto', sans-serif;
+font-style: italic;
+width:260px;
+height:40px;
+border-radius:5px;
+border:none;
+// background-color:#52b6ff;
+font-size: 16px;
+color:black;
+position:absolute;
+top:70px;
+left:200px;
+`;
+
+const StyledOption = styled.option`
+font-family: 'Roboto', sans-serif;
+font-size: 16px;
+`;
