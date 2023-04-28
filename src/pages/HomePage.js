@@ -2,28 +2,21 @@ import styled from "styled-components";
 import Header from "./Components/Header";
 import { PageContainer } from "./LoginPage";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import CartIcon from "./Components/CartIcon";
+import MagnifyingGlass from "./Components/MagnifyingGlassIcon";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function HomePage(){
+export default function HomePage() {
     return (
         <>
-        <Header />
-        <PageContainer>
-        <MagnifyingGlass />
-        </PageContainer>
+            <Header />
+            <PageContainer>
+
+                <CartIcon />
+                <MagnifyingGlass />
+                <ToastContainer />
+            </PageContainer>
         </>
     );
 }
-
-const MagnifyingGlass = styled(HiMagnifyingGlass)`
-color: #52b6ff;
-width: 2.5rem;
-height: 2.5rem;
-position: fixed;
-top: 110px;
-right: 15px;
-color: black;
-border-radius: 50%;
-:hover{
-    cursor: pointer;
-}
-`
