@@ -3,6 +3,7 @@ import LogInPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import SignUp from "./pages/SignUp";
 import UserProvider from "./contexts/loginContext";
+import CheckoutPage from "./pages/CheckoutPage";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<LogInPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/carrinho" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

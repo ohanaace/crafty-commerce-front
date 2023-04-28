@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function CartIcon (){
     return (
