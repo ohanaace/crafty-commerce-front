@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import logo from "../assets/transparentlogo.png"
-import { useState} from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiUrl } from "../App";
@@ -14,7 +14,7 @@ export default function LogInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const {setAuthUser} = useContext(UserContext);
+    const { setAuthUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     function submitLogin(e) {
@@ -63,7 +63,7 @@ export default function LogInPage() {
                 />
                 <button type={"submit"}
                     disabled={loading}>
-                 {loading ? <ThreeDots type="ThreeDots" color={"#FFF"} height={20} width={20} /> :  "Entrar"}
+                    {loading ? <ThreeDots type="ThreeDots" color={"#FFF"} height={20} width={20} /> : "Entrar"}
                 </button>
                 <Link to={"/signup"}>
                     Não tem uma conta? Cadastre-se aqui!
@@ -136,3 +136,4 @@ const FormContainer = styled.form`
     }
 `
 export { FormContainer };
+export { PageContainer };
