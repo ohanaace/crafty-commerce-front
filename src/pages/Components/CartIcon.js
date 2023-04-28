@@ -8,7 +8,6 @@ export default function CartIcon() {
         </DivRedonda>
     )
 }
-
 const DivRedonda = styled.div`
 width: 50px;
 height: 50px;
