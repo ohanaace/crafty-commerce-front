@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BsFillPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
-import {FaTrash} from "react-icons/fa";
+import {FaTrash, FaShoppingCart} from "react-icons/fa";
 
 export default function CartPage() {
   return (
