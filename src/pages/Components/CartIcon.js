@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function CartIcon() {
     return (
-        <DivRedonda >
-            <Cart />
-        </DivRedonda>
+        <Link to={"/carrinho"}>
+            <DivRedonda >
+                <Cart />
+            </DivRedonda>
+        </Link>
     )
 }
 const DivRedonda = styled.div`
@@ -20,6 +23,7 @@ bottom: 70px;
 right: 25px;
 `
 const Cart = styled(FaShoppingCart)`
+color: #000;
 width: 50%;
 height:50%;
 margin-left:10px;

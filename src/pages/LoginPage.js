@@ -21,7 +21,6 @@ export default function LogInPage() {
         e.preventDefault();
         setLoading(true)
         const body = { email, password };
-        console.log(body)
         axios.post(`${apiUrl}/login`, body)
             .then((res) => {
                 toast('Login bem sucedido!');
@@ -76,8 +75,10 @@ export default function LogInPage() {
 const PageContainer = styled.main`
     background: rgb(157,233,148);
     background: radial-gradient(circle, rgba(157,233,148,1) 0%, rgba(174,214,238,1) 100%);
-    width: 100%;
-    height: 100vh;
+    min-width: 100%;
+    max-width: max-content;
+    min-height: 100vh;
+    max-height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
