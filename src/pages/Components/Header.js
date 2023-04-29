@@ -19,7 +19,7 @@ export default function Header() {
             <Text>         
                     <Logo src={logo} alt="logo" />
                  <Name to={"/home"}>Crafty</Name>   
-                <Name><FiLogOut className="myIcon" size={38} onClick={()=>logOut() } /></Name>
+                <FiLogOut className="myIcon" size={38} onClick={()=>logOut() } />
             </Text>
 
         </>
