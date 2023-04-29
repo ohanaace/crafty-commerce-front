@@ -12,11 +12,13 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/loginContext";
 import { useState } from "react";
 import ProductCard from "./Components/ProductCard";
+import { SearchContext } from "../contexts/searchContext";
+
 
 export default function HomePage() {
     const { config } = useContext(UserContext);
-    const [showSearchInput, setShowSearchInput] = useState(false);
     const [productList, setProductList] = useState([]);
+    const {showSearchInput} = useContext(SearchContext);
     useEffect(() => {
         axios.get(`${apiUrl}/products`, config)
             .then(res => {
@@ -41,7 +43,7 @@ export default function HomePage() {
                     />)}
                 </ProductContainer>
                 <CartIcon />
-                <MagnifyingGlass showSearchInput={showSearchInput} setShowSearchInput={setShowSearchInput} />
+                <MagnifyingGlass showSearchInput={showSearchInput} />
                 <ToastContainer />
             </PageContainer>
         </>
@@ -59,3 +61,4 @@ width: 50%;
  flex-direction: column;
 }
 `
+export {ProductContainer}

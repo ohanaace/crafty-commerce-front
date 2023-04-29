@@ -7,17 +7,23 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/loginContext";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../contexts/searchContext";
 
-export default function MagnifyingGlass(props) {
+export default function MagnifyingGlass() {
     const { config } = useContext(UserContext)
     const [type, setType] = useState("");
-    const {showSearchInput, setShowSearchInput} = props;
+    const { showSearchInput, setShowSearchInput } = useContext(SearchContext);
+    const navigate = useNavigate()
     function getProductsByType() {
         const param = type.toLowerCase()
         axios.get(`${apiUrl}/products/${param}`, config)
             .then(res => {
                 console.log(res.data);
-                toast("Pesquisa bem sucedida :)")
+                toast("Pesquisa bem sucedida :)");
+                const searchResult = res.data;
+                navigate(`/products/${param}`, { state: searchResult })
+
             })
             .catch(err => {
                 console.log(err);
@@ -29,9 +35,12 @@ export default function MagnifyingGlass(props) {
             getProductsByType();
         }
     }
+    function handleClick() {
+        setShowSearchInput(!showSearchInput)
+    }
     return (
         <>
-            <DivRedonda onClick={() => setShowSearchInput(!showSearchInput)} >
+            <DivRedonda onClick={handleClick} >
                 <MagnifyingGlassIcon />
             </DivRedonda>
             {showSearchInput && (

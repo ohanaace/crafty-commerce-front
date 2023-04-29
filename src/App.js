@@ -5,6 +5,8 @@ import SignUp from "./pages/SignUp";
 import UserProvider from "./contexts/loginContext";
 import CheckoutPage from "./pages/CheckoutPage";
 import HomePage from "./pages/HomePage";
+import SearchPage from "./pages/SearchPage";
+import SearchProvider from "./contexts/searchContext";
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,13 +16,16 @@ function App() {
   return (
     <BrowserRouter>
       <UserProvider>
-        <Routes>
-          <Route path="/" element={<LogInPage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/carrinho" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-        </Routes>
+        <SearchProvider>
+          <Routes>
+            <Route path="/" element={<LogInPage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/products/:type" element={<SearchPage />} />
+            <Route path="/carrinho" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+          </Routes>
+        </SearchProvider>
       </UserProvider>
     </BrowserRouter>
   );
