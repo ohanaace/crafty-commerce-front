@@ -1,22 +1,61 @@
 import styled from "styled-components";
 import Header from "./Components/Header";
 import { PageContainer } from "./LoginPage";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import CartIcon from "./Components/CartIcon";
 import MagnifyingGlass from "./Components/MagnifyingGlassIcon";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from "react";
+import axios from "axios";
+import { apiUrl } from "../App";
+import { useContext } from "react";
+import { UserContext } from "../contexts/loginContext";
+import { useState } from "react";
+import ProductCard from "./Components/ProductCard";
 
 export default function HomePage() {
+    const { config } = useContext(UserContext);
+    const [showSearchInput, setShowSearchInput] = useState(false);
+    const [productList, setProductList] = useState([]);
+    useEffect(() => {
+        axios.get(`${apiUrl}/products`, config)
+            .then(res => {
+                setProductList(res.data);
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            })
+    }, [])
     return (
         <>
             <Header />
             <PageContainer>
-
+                <ProductContainer showSearchInput={showSearchInput} >
+                    {productList.map((product) => <ProductCard
+                        key={product._id}
+                        id={product._id}
+                        name={product.name}
+                        price={product.price}
+                        image={product.image}
+                        type={product.type}
+                    />)}
+                </ProductContainer>
                 <CartIcon />
-                <MagnifyingGlass />
+                <MagnifyingGlass showSearchInput={showSearchInput} setShowSearchInput={setShowSearchInput} />
                 <ToastContainer />
             </PageContainer>
         </>
     );
 }
+const ProductContainer = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+padding: 10px;
+width: 50%;
+@media screen and (max-width: 400px) {
+ margin-top: ${props => props.showSearchInput ? "180px" : "120px" };
+ flex-direction: column;
+}
+`

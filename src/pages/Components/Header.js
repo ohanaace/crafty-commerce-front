@@ -18,8 +18,8 @@ export default function Header() {
         <> 
             <Text>         
                     <Logo src={logo} alt="logo" />
-                    Crafty
-                <Link><FiLogOut className="myIcon" size={38} onClick={()=>logOut() } /></Link>
+                 <Name to={"/home"}>Crafty</Name>   
+                <Name><FiLogOut className="myIcon" size={38} onClick={()=>logOut() } /></Name>
             </Text>
 
         </>
@@ -27,7 +27,7 @@ export default function Header() {
 }
 
 const Text = styled.header`
-position:absolute;
+position:fixed;
 left:0px;
 top:0px;
 width:100vw;
@@ -43,9 +43,12 @@ font-family: 'cookie', sans-serif;
 .myIcon{
     margin-right:55px;    
 }
-
 `
 const Logo = styled.img`
 max-height:7rem;
 max-width:7rem;
+`
+const Name = styled(Link)`
+text-decoration: none;
+color: #000;
 `

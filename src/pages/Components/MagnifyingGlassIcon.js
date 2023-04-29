@@ -8,38 +8,34 @@ import { UserContext } from "../../contexts/loginContext";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function MagnifyingGlass() {
-    const {config} = useContext(UserContext)
+export default function MagnifyingGlass(props) {
+    const { config } = useContext(UserContext)
     const [type, setType] = useState("");
-    const [showSearchInput, setShowSearchInput] = useState(false);
-    function searchProductType() {
-        console.log("Sua pesquisa aqui :D");
-        setShowSearchInput(!showSearchInput);
+    const {showSearchInput, setShowSearchInput} = props;
+    function getProductsByType() {
+        const param = type.toLowerCase()
+        axios.get(`${apiUrl}/products/${param}`, config)
+            .then(res => {
+                console.log(res.data);
+                toast("Pesquisa bem sucedida :)")
+            })
+            .catch(err => {
+                console.log(err);
+                toast.error(err.response.data);
+            })
     }
-    function getProductsByType(){
-        axios.get(`${apiUrl}/products/${type}`, config)
-        .then(res => {
-            console.log(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-            toast.error(err.response.data);
-        })
-    
-    }
-    function handleEnterKey(e){
-        if(e.key === "Enter"){
-            console.log("envio com enter");
+    function handleEnterKey(e) {
+        if (e.key === "Enter") {
             getProductsByType();
         }
     }
     return (
         <>
-            <DivRedonda onClick={searchProductType} >
+            <DivRedonda onClick={() => setShowSearchInput(!showSearchInput)} >
                 <MagnifyingGlassIcon />
             </DivRedonda>
             {showSearchInput && (
-                <SearchHolder display={showSearchInput}>
+                <SearchHolder showSearchInput={showSearchInput}>
                     <SearchInput
                         type="text"
                         placeholder="Digite sua busca aqui..."
@@ -54,7 +50,6 @@ export default function MagnifyingGlass() {
         </>
     )
 }
-
 const DivRedonda = styled.div`
 width: 50px;
 height: 50px;
@@ -78,9 +73,8 @@ border-radius: 50%;
 }
 `
 const SearchHolder = styled.div`
-display: ${props => props.display ? "flex" : "none"};
+display: ${props => props.showSearchInput ? "flex" : "none"};
 width: 60%;
-
 `
 const SearchInput = styled.input`
 position: fixed;
@@ -107,11 +101,8 @@ border: none;
 border-radius: 2px;
 :hover{
     cursor: pointer;
-}
-`
+}`
 const MiniSearchGlass = styled(HiMagnifyingGlass)`
 color: #000;
 width: 1.5rem;
-height: 1.5rem;
-`
-
+height: 1.5rem;`

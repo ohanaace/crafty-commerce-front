@@ -7,7 +7,7 @@ export default function UserProvider({ children }) {
     const localUser = JSON.parse(localStorage.getItem("user"));
     const [authUser, setAuthUser] = useState(localUser !== null ? localUser : {});
     const navigate = useNavigate();
-    const config = {headers: {Authorization: `Bearer ${localUser.token}`}}
+    const config = localUser !== null ? {headers: {Authorization: `Bearer ${localUser.token}`}} : ""
 
     useEffect(() => {
         if (localUser === null) {
