@@ -19,7 +19,7 @@ background-color:#F5F5DC;
 display: flex;
 align-items:center;
 position: fixed;
-bottom: 70px;
+bottom: 40px;
 right: 25px;
 `
 const Cart = styled(FaShoppingCart)`
