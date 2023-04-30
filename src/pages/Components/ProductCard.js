@@ -1,9 +1,27 @@
+import axios from "axios";
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../contexts/loginContext";
+import { apiUrl } from "../../App";
+import { useNavigate } from "react-router-dom";
+
+
 export default function ProductCard(props) {
-  const { id, name, price, description, image, type } = props;
+  const { id, name, price, image} = props;
+  const { config } = useContext(UserContext);
+  const navigate = useNavigate()
+  function getSingleProduct() {
+    axios.get(`${apiUrl}/product/${id}`, config)
+      .then(res => {
+        console.log(res.data);
+        const product = res.data;
+        navigate(`/product/${id}`, { state: product })
+      })
+      .catch(err => console.log(err.response.data));
+  }
   return (
     <>
-      <ProductCardItem>
+      <ProductCardItem onClick={getSingleProduct} >
         <ItemImage src={image} alt="product" />
         <ItemInfo>
           <ItemName>{name}</ItemName>

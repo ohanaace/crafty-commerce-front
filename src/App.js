@@ -7,6 +7,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import SearchProvider from "./contexts/searchContext";
+import ProductPage from "./pages/ProductPage";
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -22,6 +23,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/products/:type" element={<SearchPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/carrinho" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
