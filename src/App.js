@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import SearchProvider from "./contexts/searchContext";
 import ProductPage from "./pages/ProductPage";
+import { useState } from "react";
 
 
 const apiUrl = process.env.REACT_APP_API_URL;

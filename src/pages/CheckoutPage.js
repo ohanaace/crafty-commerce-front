@@ -1,42 +1,46 @@
-import axios from "axios";
-import { useEffect } from "react";
 import styled from "styled-components";
-import { apiUrl } from "../App";
-import { useState } from "react";
-
-import { UserContext } from "../contexts/loginContext";
-import { useContext } from "react";
 import { Link } from "react-router-dom"
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { apiUrl } from "../App";
+import { UserContext } from "../contexts/loginContext";
+import loading from "../assets/loading.gif";
+
 
 export default function CheckoutPage() {
-  const [cartItems, setCartItems] = useState([]);
-  const { config } = useContext(UserContext);
-  const [payment, setPayment] = useState("");
+
+  const [purchaseInfos, setPurchaseInfos] = useState(null);
+  const {config} = useContext(UserContext);
 
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/cartProducts`, config)
-      .then((response) => {
-        console.log(response.data);
-        console.log("useEffect checkoutpage .then");
-        setCartItems(response.data.products);
-        setPayment(response.data.user.payment); //FORMA DE PAGAMENTO
+    axios.get(`${apiUrl}/checkout`, config)
+      .then(res => {
+        console.log(res.data)
+        setPurchaseInfos(res.data)
       })
-  }, []);
+      .catch(err => console.log(err.response.data))
+  }, [])
 
-  const checkoutValue = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
-
+  if (purchaseInfos === null){
+    return (
+      <Container>
+        <Title>Resumo do pedido</Title>
+        <LoadingGif>
+          <img src={loading} alt="loading" />
+        </LoadingGif>
+      </Container>
+    )
+  }
+  
   return (
     <Container>
       <Title>Resumo do pedido</Title>
       <CheckoutContainer>
         <Infos>
-          <h1>Valor Total: {checkoutValue}</h1>
+          <h1>Valor Total: {purchaseInfos.subtotal}</h1>
           <InfosContainer>
-            {cartItems.map((item) => (
-              <SaleItem key={item.id}>
+            {purchaseInfos.products.map((item, index) => (
+              <SaleItem key={index}>
                 <img src={item.image} alt={item.name} />
                 <p>{item.name}</p>
                 <p>Quantidade: {item.quantity}</p>
@@ -46,7 +50,7 @@ export default function CheckoutPage() {
           </InfosContainer>
         </Infos>
       </CheckoutContainer>
-      <section>Forma de Pagamento: {payment ? payment : "Não encontrado."}</section>
+      <section>Forma de Pagamento: {purchaseInfos.payment}</section>
      <Link to="/home"> <CheckoutButton>
 Voltar
       </CheckoutButton>
@@ -192,3 +196,17 @@ const SaleItem = styled.article`
     font-size: 0.7rem;
   }
 `;
+
+const LoadingGif = styled.div`
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-itens: center;
+    img{
+        width: 50px;
+        height: 50px;
+    }
+`
