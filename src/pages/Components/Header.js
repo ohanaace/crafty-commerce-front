@@ -27,6 +27,7 @@ export default function Header() {
 }
 
 const Text = styled.header`
+z-index: 1;
 position:fixed;
 left:0px;
 top:0px;

@@ -3,7 +3,7 @@ import CartIcon from "./Components/CartIcon";
 import Header from "./Components/Header";
 import MagnifyingGlass from "./Components/MagnifyingGlassIcon";
 import { PageContainer } from "./LoginPage";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { BsFillPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
@@ -17,6 +17,7 @@ export default function ProductPage() {
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
     const { config } = useContext(UserContext);
+    const navigate = useNavigate();
 
     function handleCount(operation) {
         if (operation !== "add" && quantity === 1) return
@@ -34,6 +35,7 @@ export default function ProductPage() {
         .then(res => {
             console.log(res.data);
             toast.success(res.data, {autoClose: 1500});
+            navigate("/home");
         })
         .catch(err => {
             toast.error(err.response.data);

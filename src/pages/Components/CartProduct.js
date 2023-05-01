@@ -67,18 +67,16 @@ const CartItem = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 2rem;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
   position: relative;
+  @media screen and (max-width: 400px) {
+ width: 100%;
+}
 `;
-
 const ItemImage = styled.img`
   width: 150px;
   height: 150px;
   margin-right: 2rem;
+  
 `;
 
 const ItemInfo = styled.div`
@@ -92,6 +90,10 @@ font-family: 'Roboto', sans-serif;
 font-size: 1.5rem;
 font-weight: 600;
 margin-bottom: 1rem;
+@media screen and (max-width: 400px){
+    width: 40%;
+    font-size: 1rem;
+}
 `;
 
 const ItemPrice = styled.p`
@@ -99,6 +101,10 @@ const ItemPrice = styled.p`
   font-weight: 500;
   margin-bottom: 1rem;
   font-family: 'Roboto', sans-serif;
+  @media screen and (max-width: 400px) {
+ width: 90%;
+ font-size: 1rem;
+}
 `;
 
 const QuantityControl = styled.div`
@@ -106,9 +112,14 @@ const QuantityControl = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: 8rem;
+  right: 5rem;
   top: 8rem;
-
+  @media screen and (max-width: 400px){
+    justify-content: space-around;
+    margin-top: 1.7rem;
+    width: 40%;
+    font-size: 1rem;
+}
 `;
 
 const PlusIcon = styled(BsFillPlusCircleFill)`
@@ -131,6 +142,10 @@ color: #52b6ff;
   bottom: 0px;
   right:0px;
   color: gray;
+  @media screen and (max-width: 400px){
+    font-size: 1rem;
+    top: 165px;
+}
 `
 const QuantityText = styled.span`
   font-size: 1.5rem;
