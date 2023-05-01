@@ -1,27 +1,26 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
 import loading from "../assets/loading.gif";
 
-
 export default function CheckoutPage() {
-
   const [purchaseInfos, setPurchaseInfos] = useState(null);
-  const {config} = useContext(UserContext);
+  const { config } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/checkout`, config)
-      .then(res => {
-        console.log(res.data)
-        setPurchaseInfos(res.data)
+    axios
+      .get(`${apiUrl}/checkout`, config)
+      .then((res) => {
+        console.log(res.data);
+        setPurchaseInfos(res.data);
       })
-      .catch(err => console.log(err.response.data))
-  }, [])
+      .catch((err) => console.log(err.response.data));
+  }, []);
 
-  if (purchaseInfos === null){
+  if (purchaseInfos === null) {
     return (
       <Container>
         <Title>Resumo do pedido</Title>
@@ -29,32 +28,32 @@ export default function CheckoutPage() {
           <img src={loading} alt="loading" />
         </LoadingGif>
       </Container>
-    )
+    );
   }
-  
+
   return (
     <Container>
       <Title>Resumo do pedido</Title>
       <CheckoutContainer>
         <Infos>
-          <h1>Valor Total: {purchaseInfos.subtotal}</h1>
+          <h1>Valor Total: {purchaseInfos.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h1>
           <InfosContainer>
             {purchaseInfos.products.map((item, index) => (
               <SaleItem key={index}>
                 <img src={item.image} alt={item.name} />
                 <p>{item.name}</p>
                 <p>Quantidade: {item.quantity}</p>
-                <p>Preço: R${item.price}</p>
+                <p>Preço: {item.price.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
               </SaleItem>
             ))}
           </InfosContainer>
         </Infos>
-      </CheckoutContainer>
-      <section>Forma de Pagamento: {purchaseInfos.payment}</section>
-     <Link to="/home"> <CheckoutButton>
-Voltar
-      </CheckoutButton>
+        <section>Forma de Pagamento: {purchaseInfos.payment}</section>
+      <Link to="/home">
+        {" "}
+        <CheckoutButton>Voltar</CheckoutButton>
       </Link>
+      </CheckoutContainer>
     </Container>
   );
 }
@@ -71,9 +70,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  section{
-  margin-top:0.5rem;
-  font-family: "Roboto", sans-serif;    
+  section {
+    margin: auto;
+    font-weight:500;
+    font-family: "Roboto", sans-serif;
   }
 `;
 
@@ -83,7 +83,8 @@ const CheckoutContainer = styled.div`
   padding: 16px;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -93,6 +94,8 @@ const CheckoutContainer = styled.div`
   background-color: #f5f5f5;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+border: 1px solid #e9e9e9;
+
 `;
 
 const Infos = styled.div`
@@ -109,7 +112,7 @@ const Infos = styled.div`
   h1 {
     font-size: 1rem;
     font-weight: bold;
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -153,7 +156,7 @@ const CheckoutButton = styled.button`
   font-size: 1rem;
   color: #fff;
   font-weight: 600;
-  margin-top:1rem;
+  margin-top: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
@@ -163,22 +166,26 @@ const CheckoutButton = styled.button`
 `;
 
 const SaleItem = styled.article`
-  width: 150px;
-  height: 150px;
-  margin-right: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+background-color:  #F5F5DC;
+width:30%;
+height: 18rem;
+padding: 1.9rem;
+border-radius: 10px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+margin:5px;
+margin-bottom: 1rem;
+
+text-align:center;
 
   img {
-    width: 7rem;
-    height: 7rem;
+    width: 160px;
+    height: 130px;
+    border-radius: 4px;
   }
 
   p {
@@ -188,25 +195,32 @@ const SaleItem = styled.article`
   }
 
   p:nth-child(2) {
-    font-weight: bold;
-    font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    margin-top:0.2rem;
   }
 
   p:nth-child(4) {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    font-family: 'Roboto', sans-serif;
   }
 `;
 
 const LoadingGif = styled.div`
-    width: 100vw;
-    height: 100vh;
-    margin: 0 auto;
-    margin-top: 200px;
-    display: flex;
-    justify-content: center;
-    align-itens: center;
-    img{
-        width: 50px;
-        height: 50px;
-    }
-`
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 50px;
+    height: 50px;
+  }
+`;
