@@ -1,16 +1,19 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
 import loading from "../assets/loading.gif";
 import Header from "./Components/Header";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CheckoutPage() {
   const [purchaseInfos, setPurchaseInfos] = useState(null);
   const { config } = useContext(UserContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -32,31 +35,46 @@ export default function CheckoutPage() {
       </Container>
     );
   }
+  function cleanCart() {
+    axios.get(`${apiUrl}/deleteCart`, config)
+      .then(res => {
+        console.log(res.data);
+        toast(res.data);
+        navigate("/home");
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
 
+  }
   return (
-    <Container>
-      <Title>Resumo do pedido</Title>
-      <CheckoutContainer>
-        <Infos>
-          <h1>Valor Total: {purchaseInfos.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h1>
-          <InfosContainer>
-            {purchaseInfos.products.map((item, index) => (
-              <SaleItem key={index}>
-                <img src={item.image} alt={item.name} />
-                <p>{item.name}</p>
-                <p>Quantidade: {item.quantity}</p>
-                <p>Preço: {item.price.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
-              </SaleItem>
-            ))}
-          </InfosContainer>
-        </Infos>
-        <section>Forma de Pagamento: {purchaseInfos.payment}</section>
-      <Link to="/home">
-        {" "}
-        <CheckoutButton>Voltar</CheckoutButton>
-      </Link>
-      </CheckoutContainer>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <Title>Resumo do pedido</Title>
+        <CheckoutContainer>
+          <Infos>
+            <h1>Valor Total: {purchaseInfos.subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h1>
+            <InfosContainer>
+              {purchaseInfos.products.map((item, index) => (
+                <SaleItem key={index}>
+                  <img src={item.image} alt={item.name} />
+                  <p>{item.name}</p>
+                  <p>Quantidade: {item.quantity}</p>
+                  <p>Preço: {item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                </SaleItem>
+              ))}
+              <ToastContainer />
+            </InfosContainer>
+          </Infos>
+          <section>Forma de Pagamento: {purchaseInfos.payment}</section>
+          <Link>
+            {" "}
+            <CheckoutButton onClick={cleanCart} >Voltar</CheckoutButton>
+          </Link>
+        </CheckoutContainer>
+      </Container>
+    </>
   );
 }
 const Container = styled.div`
@@ -65,6 +83,7 @@ const Container = styled.div`
     rgba(157, 233, 148, 1),
     rgba(174, 214, 238, 1)
   );
+  margin-top: 100px;
   width: 100vw;
   min-height: 100vh;
   display: flex;
