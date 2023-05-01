@@ -30,7 +30,7 @@ export default function ProductPage() {
         }
     }
     function addToCart() {
-        const body = {quantity, productId: location.state._id};
+        const body = {quantity};
         axios.post(`${apiUrl}/addProduct/${location.state._id}`, body, config)
         .then(res => {
             console.log(res.data);
