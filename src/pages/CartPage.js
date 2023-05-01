@@ -5,8 +5,8 @@ import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
 import CartProduct from "./Components/CartProduct";
 import { useNavigate, Link } from "react-router-dom";
-
-
+import Header from "./Components/Header";
+import { PageContainer } from "./LoginPage";
 
 export default function CartPage() {
 
@@ -17,86 +17,61 @@ export default function CartPage() {
 
   const [cartProducts, setCartProducts] = useState([])
 
-    useEffect (() => {
-        axios.get(`${apiUrl}/cartProducts`, config)
-          .then((res) => {
-            setCartProducts(res.data);
-            let subtotal = 0;
-            res.data.forEach(obj => {
-              subtotal += obj.price * obj.quantity;
-            });
-            setSubtotal(subtotal);
-          })
-          .catch((err) => console.log(err.response.data))
-    }, [cartProducts])
+  useEffect(() => {
+    axios.get(`${apiUrl}/cartProducts`, config)
+      .then((res) => {
+        setCartProducts(res.data);
+        let subtotal = 0;
+        res.data.forEach(obj => {
+          subtotal += obj.price * obj.quantity;
+        });
+        setSubtotal(subtotal);
+      })
+      .catch((err) => console.log(err.response.data))
+  }, [cartProducts])
 
-    function handleCheckout (){
-      console.log("clicou em finalizar");
-      console.log(paymentMethod)
-      axios.post(`${apiUrl}/checkout`, {payment: paymentMethod, subtotal: subtotal}, config)
-        .then(res => {
-          console.log(res.data);
-          navigate("/checkout");
-        })
-        .catch(err => console.log(err.response.data))
-        
-    }
+  function handleCheckout() {
+    console.log("clicou em finalizar");
+    console.log(paymentMethod)
+    axios.post(`${apiUrl}/checkout`, { payment: paymentMethod, subtotal: subtotal }, config)
+      .then(res => {
+        console.log(res.data);
+        navigate("/checkout");
+      })
+      .catch(err => console.log(err.response.data))
+
+  }
 
 
   return (
-    <Container>
-      <CartTitle>Meu Carrinho</CartTitle>
-      
-      <ProductsContainer>
-
-        <Products>
-          <CartProduct cartProducts={cartProducts}/>
-        </Products>
-
-      </ProductsContainer>
-
-      <PurchaseSummary>
-        <h2>Subtotal =</h2>
-        <div>R$ {subtotal.toFixed(2)}</div>
-
-        <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-          <StyledOption value="">Selecione a forma de pagamento</StyledOption>
-          <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
-          <StyledOption value="Cartão de Débito">Cartão de Débito</StyledOption>
-          <StyledOption value="Boleto Bancário">Boleto Bancário</StyledOption>
-          <StyledOption value="Pix">Pix</StyledOption>
-          
-        </StyledSelect>
-      
-        <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
-
-        <Link to="/home"> 
-        <Button>
-          Voltar
-        </Button>
-        </Link>
-
-      </PurchaseSummary>
-
-    </Container>
-
+    <>
+      <Header />
+      <PageContainer>
+        <CartTitle>Meu Carrinho</CartTitle>
+        <ProductsContainer>
+          <Products>
+            <CartProduct cartProducts={cartProducts} />
+          </Products>
+        </ProductsContainer>
+        <PurchaseSummary>
+          <StyledTotal>Subtotal =</StyledTotal>
+          <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
+          <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+            <StyledOption value="">Selecione a forma de pagamento</StyledOption>
+            <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
+            <StyledOption value="Cartão de Débito">Cartão de Débito</StyledOption>
+            <StyledOption value="Boleto Bancário">Boleto Bancário</StyledOption>
+            <StyledOption value="Pix">Pix</StyledOption>
+          </StyledSelect>
+          <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
+            <Button onClick={() => navigate("/home")} >
+              Voltar
+            </Button>
+        </PurchaseSummary>
+      </PageContainer>
+    </>
   );
 }
-
-const Container = styled.div`
-  background: linear-gradient(
-    to bottom right,
-    rgba(157, 233, 148, 1),
-    rgba(174, 214, 238, 1)
-  );
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ProductsContainer = styled.div`
 flex-grow: 1;
 padding: 16px;
@@ -115,7 +90,6 @@ margin: 10px 0px;
     display: none;
 }
 `
-
 const CartTitle = styled.h1`
 font-family: 'Roboto', sans-serif;
 font-size: 2rem;
@@ -137,6 +111,12 @@ font-weight: 600;
 position: absolute;
 top: 20px;
 right: 150px;
+@media screen and (max-width: 400px){
+  margin: 10px;
+  height: 80px;
+  width: 80%;
+  position: static;
+}
 `
 const Button = styled.button`
 border: none;
@@ -151,8 +131,13 @@ font-weight: 600;
 position: absolute;
 top: 80px;
 right: 150px;
+@media screen and (max-width: 400px){
+  margin: 10px;
+  height: 80px;
+  width: 80%;
+  position: static;
+  }
 `
-
 const PurchaseSummary = styled.div`
 width: 50%;
 height: 15vh;
@@ -162,20 +147,34 @@ align-items: center;
 justify-content: center;
 margin-bottom: 2rem;
 position: relative;
-h2, div{
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
+@media screen and (max-width: 400px) {
+position: static;
+ width: 90%;
+ height: 16rem;
+ margin-bottom: 0.5rem;
 }
-h2{
-    position:absolute;
-    top: 30px;
-    left: 200px;
+`
+const StyledTotal = styled.h2`
+position:absolute;
+top: 30px;
+left: 200px;
+font-family: 'Roboto', sans-serif;
+font-size: 1.5rem;
+font-weight: 600;
+@media screen and (max-width: 400px){
+  position: static;
 }
-div {
-    position:absolute;
-    top: 30px;
-    left: 350px;
+`
+const StyledAmount = styled.div`
+font-family: 'Roboto', sans-serif;
+font-size: 1.5rem;
+font-weight: 600;
+position:absolute;
+top: 30px;
+left: 350px;
+@media screen and (max-width: 400px){
+  margin-bottom: 1rem;
+  position: static;
 }
 `
 const StyledSelect = styled.select`
@@ -191,6 +190,10 @@ color:black;
 position:absolute;
 top:70px;
 left:200px;
+@media screen and (max-width: 400px){
+  position: static;
+  margin-bottom: 0.5rem;
+}
 `;
 
 const StyledOption = styled.option`
