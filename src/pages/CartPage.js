@@ -16,6 +16,7 @@ export default function CartPage() {
   const [subtotal, setSubtotal] = useState(0);
   const navigate = useNavigate();
   const { config } = useContext(UserContext);
+  const [error, setError] = useState("");
 
   const [cartProducts, setCartProducts] = useState([])
 
@@ -29,7 +30,11 @@ export default function CartPage() {
         });
         setSubtotal(subtotal);
       })
-      .catch((err) => console.log(err.response.data))
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setError(404);
+        }
+      })
   }, [cartProducts])
 
   function handleCheckout() {
@@ -51,27 +56,46 @@ export default function CartPage() {
       <Header />
       <PageContainer>
         <CartTitle>Meu Carrinho</CartTitle>
-        <ProductsContainer>
-          <Products>
-            <CartProduct cartProducts={cartProducts} />
-          </Products>
-        </ProductsContainer>
-        <ToastContainer />
-        <PurchaseSummary>
-          <StyledTotal>Subtotal =</StyledTotal>
-          <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
-          <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-            <StyledOption value="">Selecione a forma de pagamento</StyledOption>
-            <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
-            <StyledOption value="Cartão de Débito">Cartão de Débito</StyledOption>
-            <StyledOption value="Boleto Bancário">Boleto Bancário</StyledOption>
-            <StyledOption value="Pix">Pix</StyledOption>
-          </StyledSelect>
-          <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
-            <Button onClick={() => navigate("/home")} >
-              Voltar
-            </Button>
-        </PurchaseSummary>
+        
+          {error === 404 ? (
+            <>
+            <ProductsContainer>
+              <NoProducts>
+                Você ainda não possui produtos adicionados no carrinho! :(
+              </NoProducts>
+            </ProductsContainer>
+            <PurchaseSummary>
+                <Button onClick={() => navigate("/home")} >
+                  Voltar
+                </Button>
+            </PurchaseSummary>
+            </>
+          ) : (
+            <>
+            <ProductsContainer>
+            
+            <Products>
+              <CartProduct cartProducts={cartProducts} />
+            </Products>
+            </ProductsContainer>
+          <PurchaseSummary>
+            <StyledTotal>Subtotal =</StyledTotal>
+            <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
+            <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+              <StyledOption value="">Selecione a forma de pagamento</StyledOption>
+              <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
+              <StyledOption value="Cartão de Débito">Cartão de Débito</StyledOption>
+              <StyledOption value="Boleto Bancário">Boleto Bancário</StyledOption>
+              <StyledOption value="Pix">Pix</StyledOption>
+            </StyledSelect>
+            <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
+              <Button onClick={() => navigate("/home")} >
+                Voltar
+              </Button>
+          </PurchaseSummary>
+          </>
+          )}
+          
       </PageContainer>
     </>
   );
@@ -86,6 +110,13 @@ overflow-y: scroll;
 ::-webkit-scrollbar {
   display: none;
 }
+`
+const NoProducts = styled.div`
+font-family: 'Roboto', sans-serif;
+font-style: italic;
+width:260px;
+height:40px;
+margin-top: 100px;
 `
 const Products = styled.div`
 overflow-y: scroll;
