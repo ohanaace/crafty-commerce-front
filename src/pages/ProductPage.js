@@ -35,7 +35,7 @@ export default function ProductPage() {
         .then(res => {
             console.log(res.data);
             toast.success(res.data, {autoClose: 1500});
-            navigate("/home");
+            setTimeout(() => navigate("/home"), 2500)
         })
         .catch(err => {
             toast.error(err.response.data);

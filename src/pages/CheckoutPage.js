@@ -39,11 +39,11 @@ export default function CheckoutPage() {
     axios.get(`${apiUrl}/deleteCart`, config)
       .then(res => {
         console.log(res.data);
-        toast(res.data);
-        navigate("/home");
+        toast(res.data, {autoClose: 1500} );
+        setTimeout(() => navigate("/home"), 2500)
       })
       .catch(err => {
-        console.log(err.response.data)
+        toast.error(err.response.data)
       })
 
   }
