@@ -33,7 +33,7 @@ export default function ProductPage() {
         axios.post(`${apiUrl}/addProduct/${location.state._id}`, body, config)
         .then(res => {
             console.log(res.data);
-            toast.success(res.data);
+            toast.success(res.data, {autoClose: 1500});
         })
         .catch(err => {
             toast.error(err.response.data);

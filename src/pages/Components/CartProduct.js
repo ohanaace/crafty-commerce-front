@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BsFillPlusCircleFill, BsFillDashCircleFill } from "react-icons/bs";
 import {FaTrash} from "react-icons/fa";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext} from "react";
 import { UserContext } from "../../contexts/loginContext";
 import { apiUrl } from "../../App";
 
@@ -11,17 +11,17 @@ export default function CartProduct ({cartProducts}){
     const {config} = useContext(UserContext);
     
     return (
-        cartProducts.map((p) => (
-            <CartContainer>
+        cartProducts.map((p, index) => (
+            <CartContainer key={index}>
                 <CartItem>
                 <ItemImage src={p.image} alt="Product image" />
                 <ItemInfo>
                     <ItemName>{p.name}</ItemName>
-                    <ItemPrice>R$ {p.price}</ItemPrice>
+                    <ItemPrice>R$ {(p.price).toFixed(2)}</ItemPrice>
                     <QuantityControl>
                     
                     <PlusIcon onClick={() => {
-                        axios.post(`${apiUrl}/modifyProductQuantity/plus`, {p}, config)
+                        axios.get(`${apiUrl}/modifyProductQuantity/plus/${p._id}`, config)
                             .then((res) => console.log(res.data))
                             .catch((err) => console.log(err.response.data))
                         }}/>
@@ -29,14 +29,16 @@ export default function CartProduct ({cartProducts}){
                     <QuantityText>{p.quantity}</QuantityText>
                     
                     <MinusIcon onClick={() => {
-                        axios.post(`${apiUrl}/modifyProductQuantity/minus`, {p}, config)
+                        axios.get(`${apiUrl}/modifyProductQuantity/minus/${p._id}`, config)
                             .then((res) => console.log(res.data))
                             .catch((err) => console.log(err.response.data))
                         }}/>
                     
                     </QuantityControl>
                     <TrashIcon onClick={() => {
-                        axios.post(`${apiUrl}/deleteProduct`, {p}, config)
+                        console.log("clicou na lixeira")
+                        axios.get(`${apiUrl}/deleteProduct/${p._id}`, config)
+                            .catch ((err) => console.log(err.response.message))
                     }}/>
                 </ItemInfo>
                 </CartItem>

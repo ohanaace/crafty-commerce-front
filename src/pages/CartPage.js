@@ -3,30 +3,49 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import CartProduct from "./Components/CartProduct";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CartPage() {
 
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [cartProducts, setCartProducts] = useState([])
+  const [subtotal, setSubtotal] = useState(0);
+  const navigate = useNavigate();
   const { config } = useContext(UserContext);
 
-  useEffect (() => {
-    axios.get(`${apiUrl}/cartProducts`, config)
-      .then((res) => setCartProducts(res.data))
-      .catch((err) => console.log(err.response.data))
-  }, [cartProducts])
+  const [cartProducts, setCartProducts] = useState([])
 
-  function handlePaymentMethodChange(e){
-    console.log(e.target.value);
-  }
+    useEffect (() => {
+        axios.get(`${apiUrl}/cartProducts`, config)
+          .then((res) => {
+            setCartProducts(res.data);
+            let subtotal = 0;
+            res.data.forEach(obj => {
+              subtotal += obj.price * obj.quantity;
+            });
+            setSubtotal(subtotal);
+          })
+          .catch((err) => console.log(err.response.data))
+    }, [cartProducts])
+
+    function handleCheckout (){
+      console.log("clicou em finalizar");
+      console.log(paymentMethod)
+      axios.post(`${apiUrl}/checkout`, {payment: paymentMethod, subtotal: subtotal}, config)
+        .then(res => {
+          console.log(res.data);
+          navigate("/checkout");
+        })
+        .catch(err => console.log(err.response.data))
+        
+    }
+
 
   return (
     <Container>
       <CartTitle>Meu Carrinho</CartTitle>
-      <ToastContainer />
+      
       <ProductsContainer>
 
         <Products>
@@ -37,18 +56,18 @@ export default function CartPage() {
 
       <PurchaseSummary>
         <h2>Subtotal =</h2>
-        <div>R$ 34,90</div>
+        <div>R$ {subtotal.toFixed(2)}</div>
 
-        <StyledSelect value={paymentMethod} onChange={handlePaymentMethodChange}>
+        <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
           <StyledOption value="">Selecione a forma de pagamento</StyledOption>
-          <StyledOption value="credito">Cartão de Crédito</StyledOption>
-          <StyledOption value="debito">Cartão de Débito</StyledOption>
-          <StyledOption value="boleto">Boleto Bancário</StyledOption>
-          <StyledOption value="pix">Pix</StyledOption>
+          <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
+          <StyledOption value="Cartão de Débito">Cartão de Débito</StyledOption>
+          <StyledOption value="Boleto Bancário">Boleto Bancário</StyledOption>
+          <StyledOption value="Pix">Pix</StyledOption>
           
         </StyledSelect>
       
-        <CheckoutButton>Finalizar compra</CheckoutButton>
+        <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
 
       </PurchaseSummary>
 
