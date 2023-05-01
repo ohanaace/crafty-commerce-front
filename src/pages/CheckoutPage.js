@@ -187,26 +187,26 @@ const CheckoutButton = styled.button`
 `;
 
 const SaleItem = styled.article`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-between;
-background-color:  #F5F5DC;
-width:30%;
-height: 18rem;
-padding: 1.9rem;
-border-radius: 10px;
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.15);
-
-margin:5px;
-margin-bottom: 1rem;
-
-text-align:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f5dc;
+  width: 30%;
+  height: 18rem;
+  padding: 1.9rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0.15);
+  margin: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
 
   img {
-    width: 160px;
-    height: 130px;
+    height: 120px;
+    width: 100%;
+    object-fit: contain;
     border-radius: 4px;
+    margin-bottom: 1rem;
   }
 
   p {
@@ -216,11 +216,11 @@ text-align:center;
   }
 
   p:nth-child(2) {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
-    margin-top:0.2rem;
+    margin-top: 0.2rem;
   }
 
   p:nth-child(4) {
@@ -228,9 +228,21 @@ text-align:center;
     font-weight: 500;
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
+  }
+
+  @media (max-width: 400px) {
+    width: 100%;
+    height: auto;
+    padding: 8px;
+
+    img {
+      height: 80px;
+      margin-bottom: 0.5rem;
+    }
   }
 `;
+
 
 const LoadingGif = styled.div`
   width: 100vw;
