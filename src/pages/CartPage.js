@@ -91,11 +91,12 @@ margin: 10px 0px;
 }
 `
 const CartTitle = styled.h1`
+margin-top: 140px;
 font-family: 'Roboto', sans-serif;
 font-size: 2rem;
 font-weight: 700;
 color: #222;
-margin: 2rem auto;
+//margin: 2rem auto;
 `
 
 const CheckoutButton = styled.button`

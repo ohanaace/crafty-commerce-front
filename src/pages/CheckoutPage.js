@@ -5,6 +5,8 @@ import axios from "axios";
 import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
 import loading from "../assets/loading.gif";
+import Header from "./Components/Header";
+
 
 export default function CheckoutPage() {
   const [purchaseInfos, setPurchaseInfos] = useState(null);
