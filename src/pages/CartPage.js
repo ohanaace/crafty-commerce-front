@@ -7,6 +7,8 @@ import CartProduct from "./Components/CartProduct";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "./Components/Header";
 import { PageContainer } from "./LoginPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CartPage() {
 
@@ -36,7 +38,8 @@ export default function CartPage() {
     axios.post(`${apiUrl}/checkout`, { payment: paymentMethod, subtotal: subtotal }, config)
       .then(res => {
         console.log(res.data);
-        navigate("/checkout");
+        toast(res.data, {autoClose: 1500})
+        setTimeout(() => navigate("/checkout") , 2500);
       })
       .catch(err => console.log(err.response.data))
 
@@ -53,6 +56,7 @@ export default function CartPage() {
             <CartProduct cartProducts={cartProducts} />
           </Products>
         </ProductsContainer>
+        <ToastContainer />
         <PurchaseSummary>
           <StyledTotal>Subtotal =</StyledTotal>
           <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
