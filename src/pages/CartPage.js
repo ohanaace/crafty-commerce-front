@@ -4,7 +4,8 @@ import axios from "axios";
 import { apiUrl } from "../App";
 import { UserContext } from "../contexts/loginContext";
 import CartProduct from "./Components/CartProduct";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 
 
 export default function CartPage() {
@@ -69,6 +70,12 @@ export default function CartPage() {
       
         <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
 
+        <Link to="/home"> 
+        <Button>
+          Voltar
+        </Button>
+        </Link>
+
       </PurchaseSummary>
 
     </Container>
@@ -129,6 +136,20 @@ color:#fff;
 font-weight: 600;
 position: absolute;
 top: 20px;
+right: 150px;
+`
+const Button = styled.button`
+border: none;
+border-radius: 4.63636px;
+width: 10rem;
+height: 3rem;
+background-color:#52b6ff;
+font-family: 'Roboto', sans-serif;
+font-size: 1rem;
+color:#fff;
+font-weight: 600;
+position: absolute;
+top: 80px;
 right: 150px;
 `
 
