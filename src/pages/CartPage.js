@@ -46,7 +46,12 @@ export default function CartPage() {
         toast(res.data, {autoClose: 1500})
         setTimeout(() => navigate("/checkout") , 2500);
       })
-      .catch(err => console.log(err.response.data))
+      .catch(err => {
+        if(err.response.status === 422){
+          toast.error("Selecione a forma de pagamento!", {autoClose: 1500})
+        } 
+        
+        console.log(err.response.data)})
 
   }
 
@@ -78,6 +83,7 @@ export default function CartPage() {
               <CartProduct cartProducts={cartProducts} />
             </Products>
             </ProductsContainer>
+            <ToastContainer />
           <PurchaseSummary>
             <StyledTotal>Subtotal =</StyledTotal>
             <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
@@ -131,7 +137,6 @@ font-family: 'Roboto', sans-serif;
 font-size: 2rem;
 font-weight: 700;
 color: #222;
-//margin: 2rem auto;
 `
 
 const CheckoutButton = styled.button`
@@ -147,7 +152,7 @@ font-weight: 600;
 position: absolute;
 top: 20px;
 right: 150px;
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
   margin: 10px;
   height: 80px;
   width: 80%;
@@ -167,7 +172,7 @@ font-weight: 600;
 position: absolute;
 top: 80px;
 right: 150px;
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
   margin: 10px;
   height: 80px;
   width: 80%;
@@ -183,7 +188,7 @@ align-items: center;
 justify-content: center;
 margin-bottom: 2rem;
 position: relative;
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
 position: static;
  width: 90%;
  height: 16rem;
@@ -197,7 +202,7 @@ left: 200px;
 font-family: 'Roboto', sans-serif;
 font-size: 1.5rem;
 font-weight: 600;
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
   position: static;
 }
 `
@@ -208,7 +213,7 @@ font-weight: 600;
 position:absolute;
 top: 30px;
 left: 350px;
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
   margin-bottom: 1rem;
   position: static;
 }
@@ -220,13 +225,12 @@ width:260px;
 height:40px;
 border-radius:5px;
 border:none;
-// background-color:#52b6ff;
 font-size: 16px;
 color:black;
 position:absolute;
 top:70px;
 left:200px;
-@media screen and (max-width: 400px){
+@media screen and (max-width: 900px){
   position: static;
   margin-bottom: 0.5rem;
 }

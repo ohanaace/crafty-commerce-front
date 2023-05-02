@@ -56,9 +56,13 @@ align-items: center;
 flex-wrap: wrap;
 padding: 10px;
 width: 50%;
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
  margin-top: ${props => props.showSearchInput ? "180px" : "120px" };
  flex-direction: column;
+}
+@media screen and (max-width: 1200px){
+    margin-top: 100px;
+flex-direction: column;
 }
 `
 export {ProductContainer}

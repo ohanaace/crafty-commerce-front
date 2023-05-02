@@ -44,7 +44,10 @@ padding: 1.5rem;
 border-radius: 10px;
 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 margin-bottom: 1rem;
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 1200px) {
+  width: 50%;
+}
+@media screen and (max-width: 700px) {
  width: 100%;
 }
 `
@@ -54,7 +57,7 @@ const ItemInfo = styled.div`
   justify-content: space-between;
 `
 const ItemImage = styled.img`
-  width: 160px;
+  width: 8rem;
   height: 130px;
   border-radius: 3px;
 `
