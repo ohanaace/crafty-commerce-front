@@ -13,7 +13,7 @@ export default function UserProvider({ children }) {
         if (localUser === null) {
             navigate("/");
         } else {
-            // navigate("/home");
+             navigate("/home");
         }
     }, []);
 
