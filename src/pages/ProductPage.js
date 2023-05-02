@@ -57,7 +57,7 @@ export default function ProductPage() {
                             {location.state.description}
                         </ItemDescription>
                         <ItemPrice>
-                            R$ {(location.state.price * quantity).toFixed(2)}
+                            {(location.state.price * quantity).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                         </ItemPrice>
                     </ItemInfo>
                     <QuantityContainer>

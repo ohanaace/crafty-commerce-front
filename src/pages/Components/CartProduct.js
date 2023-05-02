@@ -17,7 +17,7 @@ export default function CartProduct ({cartProducts}){
                 <ItemImage src={p.image} alt="Product image" />
                 <ItemInfo>
                     <ItemName>{p.name}</ItemName>
-                    <ItemPrice>R$ {(p.price).toFixed(2)}</ItemPrice>
+                    <ItemPrice>{(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</ItemPrice>
                     <QuantityControl>
                     
                     <PlusIcon onClick={() => {

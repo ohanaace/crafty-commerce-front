@@ -38,9 +38,7 @@ export default function CheckoutPage() {
   function cleanCart() {
     axios.get(`${apiUrl}/deleteCart`, config)
       .then(res => {
-        console.log(res.data);
-        toast(res.data, {autoClose: 1500} );
-        setTimeout(() => navigate("/home"), 2500)
+        navigate("/home");
       })
       .catch(err => {
         toast.error(err.response.data)

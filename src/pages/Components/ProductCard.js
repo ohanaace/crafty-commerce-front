@@ -25,7 +25,7 @@ export default function ProductCard(props) {
         <ItemImage src={image} alt="product" />
         <ItemInfo>
           <ItemName>{name}</ItemName>
-          <ItemPrice>R$ {price}</ItemPrice>
+          <ItemPrice> {price}</ItemPrice>
         </ItemInfo>
       </ProductCardItem>
     </>

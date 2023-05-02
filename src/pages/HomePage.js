@@ -37,7 +37,7 @@ export default function HomePage() {
                         key={product._id}
                         id={product._id}
                         name={product.name}
-                        price={product.price}
+                        price={product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                         image={product.image}
                         type={product.type}
                     />)}

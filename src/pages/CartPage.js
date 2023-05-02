@@ -42,9 +42,7 @@ export default function CartPage() {
     console.log(paymentMethod)
     axios.post(`${apiUrl}/checkout`, { payment: paymentMethod, subtotal: subtotal }, config)
       .then(res => {
-        console.log(res.data);
-        toast(res.data, {autoClose: 1500})
-        setTimeout(() => navigate("/checkout") , 2500);
+        navigate("/checkout");
       })
       .catch(err => {
         if(err.response.status === 422){
@@ -86,7 +84,7 @@ export default function CartPage() {
             <ToastContainer />
           <PurchaseSummary>
             <StyledTotal>Subtotal =</StyledTotal>
-            <StyledAmount>R$ {subtotal.toFixed(2)}</StyledAmount>
+            <StyledAmount>{subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</StyledAmount>
             <StyledSelect value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
               <StyledOption value="">Selecione a forma de pagamento</StyledOption>
               <StyledOption value="Cartão de Crédito">Cartão de Crédito</StyledOption>
